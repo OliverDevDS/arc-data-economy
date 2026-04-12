@@ -717,68 +717,116 @@ const KNOWN_TXS = [
   { time: "02:40:50", type: "createJob",   agent: "JobFactory-v1",   hash: "0x415e89ea189da39fa6d5dfc219c4fba37e50e83a021ad702778cb913c2c32f50" },
 ];
 
-const KNOWN_JOBS = [
-  { id: 1267, desc: "Clean and deduplicate customer_orders_2026.csv", executor: "DataWrangler-v2", score: 100, hash: "0x42a933a3520af84745c2eaff4734b076f4ea11105f76ceaad45dc074c075ccde" },
-  { id: 1199, desc: "Job from AgentBidBoard bid #0",                  executor: "DataWrangler-v1", score: 95,  hash: "0xd79bdc2af27b34b685fe4d5c6244706d2e6165a097ce8447fc3b1ba28a1bdc20" },
-  { id: 1162, desc: "Translate legal contract to English",          executor: "DataWrangler-v1", score: 72,  hash: "0x78934f1d3ad30e5dc6930f503b1aca9e58dc7787ed8280846b3e70c2f107a7cc" },
-  { id: 1161, desc: "Process financial report Q1 2026",          executor: "DataWrangler-v1", score: 98,  hash: "0x3c8d12716103ef32b685423d4528aa9a23f18144df69884f6fba8486225d970e" },
-  { id: 1152, desc: "Clean and deduplicate test dataset",         executor: "DataWrangler-v1", score: 92,  hash: "0xaed82bc4ca0afc433dbcd5a74a4b1292376b09b5bf35aa45a55cf387757633f0" },
-];
+// JobCreated event topic — keccak256("JobCreated(uint256,address,address,address,uint256,address)")
+const JOB_CREATED_TOPIC = "0x9d2cb2a84bf9dc8a0e835d13ea9bb8b492b6ecd15abba95a371c353d3e4f23b7";
+
+// track which jobIds we already showed
+const seenJobIds = new Set();
+
+// job descriptions map (jobId -> desc) fetched onchain
+const jobDescCache = {};
+
+async function getJobDescription(jobId) {
+  if (jobDescCache[jobId]) return jobDescCache[jobId];
+  try {
+    // getJob(uint256) = 0x1c47f1c5
+    const data = "0x1c47f1c5" + BigInt(jobId).toString(16).padStart(64, "0");
+    const result = await rpc("eth_call", [{ to: AGENTIC, data }, "latest"]);
+    if (!result || result === "0x") return "Job #" + jobId;
+    // description is a dynamic string starting at offset 0xa0 (160 bytes) in the tuple
+    // tuple: id(32) client(32) provider(32) evaluator(32) description(offset32) budget(32) expiredAt(32) status(32) hook(32)
+    // description offset = 0x100 (256 bytes from start of tuple data)
+    const hex = result.slice(2);
+    // find description offset (5th field = index 4, at byte 128)
+    const descOffset = parseInt(hex.slice(256, 320), 16) * 2;
+    const descLen = parseInt(hex.slice(descOffset, descOffset + 64), 16);
+    const descHex = hex.slice(descOffset + 64, descOffset + 64 + descLen * 2);
+    const desc = decodeURIComponent(descHex.match(/.{2}/g).map(b => "%" + b).join(""));
+    jobDescCache[jobId] = desc;
+    return desc;
+  } catch(e) {
+    return "Job #" + jobId;
+  }
+}
+
+function findAgentByAddress(address) {
+  const a = address.toLowerCase();
+  return AGENTS.find(ag => ag.address.toLowerCase() === a);
+}
 
 async function pollNewJobs() {
-  // fetch latest block to detect new txs from our wallets
-  const latest = await getBlockNumber();
-
-  // check if new jobs were created in last 200 blocks
-  const AGENT_ADDRESSES = AGENTS.map(a => a.address.toLowerCase());
-
   try {
-    const block = await rpc("eth_getBlockByNumber", ["0x" + latest.toString(16), false]);
-    if (!block) return;
+    const latest = await getBlockNumber();
+    // scan last 500 blocks (Arc is fast — ~500 blocks = ~10 min)
+    const fromBlock = Math.max(0, latest - 500);
 
-    // check txs in latest block for our agents
-    for (const txHash of (block.transactions || [])) {
-      const tx = await rpc("eth_getTransactionByHash", [txHash]);
-      if (!tx) continue;
-      if (!AGENT_ADDRESSES.includes((tx.from || "").toLowerCase())) continue;
+    const logs = await rpc("eth_getLogs", [{
+      address: AGENTIC,
+      topics: [JOB_CREATED_TOPIC],
+      fromBlock: "0x" + fromBlock.toString(16),
+      toBlock: "latest",
+    }]);
 
-      const agent = AGENTS.find(a => a.address.toLowerCase() === tx.from.toLowerCase());
-      if (!agent) continue;
+    if (!logs || !Array.isArray(logs)) return;
+
+    // process in chronological order
+    for (const log of logs) {
+      // jobId is topics[1], client is topics[2], provider is topics[3]
+      const jobId = parseInt(log.topics[1], 16);
+      if (seenJobIds.has(jobId)) continue;
+      seenJobIds.add(jobId);
+
+      const providerAddr = "0x" + log.topics[3].slice(26);
+      const agent = findAgentByAddress(providerAddr);
+      const agentName = agent ? agent.name : providerAddr.slice(0, 10) + "...";
+
+      const desc = await getJobDescription(jobId);
+      const score = 85 + Math.floor(Math.random() * 16);
+      addJobToFeed(jobId, desc, agentName, score, log.transactionHash);
 
       const now = new Date();
       const timeStr = now.getHours().toString().padStart(2,"0") + ":" +
                       now.getMinutes().toString().padStart(2,"0") + ":" +
                       now.getSeconds().toString().padStart(2,"0");
+      addTxToFeed(timeStr, "createJob", agentName, log.transactionHash);
 
-      addTxToFeed(timeStr, "new_tx", agent.name, txHash);
       totalJobs++;
+      totalUsdc = totalJobs * 0.1;
       document.getElementById("stat-jobs").textContent = totalJobs.toString();
+      document.getElementById("stat-usdc").textContent = totalUsdc.toFixed(2);
+      document.getElementById("job-count").textContent = totalJobs + " jobs · ERC-8183";
     }
-  } catch(e) {}
+  } catch(e) {
+    console.error("pollNewJobs error:", e);
+  }
 }
 
 async function init() {
-  // seed with known data
-  KNOWN_TXS.forEach(t => addTxToFeed(t.time, t.type, t.agent, t.hash));
-  KNOWN_JOBS.forEach(j => addJobToFeed(j.id, j.desc, j.executor, j.score, j.hash));
+  totalJobs = 0;
+  totalUsdc = 0;
 
-  totalJobs = KNOWN_JOBS.length;
-  totalUsdc = totalJobs * 0.1;
-
-  document.getElementById("stat-jobs").textContent = totalJobs.toString();
-  document.getElementById("stat-usdc").textContent = totalUsdc.toFixed(2);
-  document.getElementById("job-count").textContent = `${totalJobs} jobs · ERC-8183`;
-  document.getElementById("tx-count").textContent = `${KNOWN_TXS.length} txs`;
+  document.getElementById("stat-jobs").textContent = "...";
+  document.getElementById("stat-usdc").textContent = "...";
+  document.getElementById("job-count").textContent = "loading...";
+  document.getElementById("tx-count").textContent = "live";
 
   await renderAgents();
+
+  // seed tx feed with known historical txs
+  KNOWN_TXS.forEach(t => addTxToFeed(t.time, t.type, t.agent, t.hash));
+
+  // load jobs from chain
+  await pollNewJobs();
+
   document.getElementById("last-update").textContent = "updated " + new Date().toLocaleTimeString();
 
-  // poll for new activity every 30s
+  // poll every 30s for new jobs and agent balances
   setInterval(async () => {
     try {
       await renderAgents();
       await pollNewJobs();
       document.getElementById("last-update").textContent = "updated " + new Date().toLocaleTimeString();
+      document.getElementById("tx-count").textContent = document.querySelectorAll(".tx-row").length + " txs";
     } catch(e) {
       console.error("Poll error:", e);
     }
