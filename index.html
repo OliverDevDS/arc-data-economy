@@ -378,7 +378,14 @@
 
 <script>
 // ─── Constants ────────────────────────────────────────────────────────────────
-const RPC               = "https://rpc.arc.testnet.circle.com";
+// RPC fallback list — browser requests require CORS-enabled endpoints.
+// rpc.arc.testnet.circle.com blocks browser origins (CORS); dRPC is browser-friendly.
+const RPC_LIST = [
+  "https://arc-testnet.drpc.org",           // dRPC — browser CORS allowed, primary
+  "https://rpc.arc.testnet.circle.com",     // Circle official — works from Node/backend
+];
+let rpcIndex = 0;
+const RPC = () => RPC_LIST[rpcIndex % RPC_LIST.length];
 const AGENTIC_COMMERCE  = "0x0747EEf0706327138c69792bF28Cd525089e4583";
 const AGENT_BID_BOARD   = "0xFb72B52eaF2b1A2e0cf96F8eDA1386288fC74ad9";
 const IDENTITY_REGISTRY = "0x8004A818BFB912233c491871b3d84c89A494BD9e";
@@ -427,14 +434,22 @@ function shortAddr(addr) {
 // ─── RPC ─────────────────────────────────────────────────────────────────────
 let reqId = 1;
 async function rpc(method, params = []) {
-  const res = await fetch(RPC, {
-    method: "POST", headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({jsonrpc:"2.0", id: reqId++, method, params}),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const d = await res.json();
-  if (d.error) throw new Error(d.error.message || JSON.stringify(d.error));
-  return d.result;
+  for (let attempt = 0; attempt < RPC_LIST.length; attempt++) {
+    try {
+      const res = await fetch(RPC(), {
+        method: "POST", headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({jsonrpc:"2.0", id: reqId++, method, params}),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const d = await res.json();
+      if (d.error) throw new Error(d.error.message || JSON.stringify(d.error));
+      return d.result;
+    } catch (err) {
+      console.warn(`[RPC] ${RPC()} failed:`, err.message);
+      rpcIndex++;
+      if (attempt === RPC_LIST.length - 1) throw err;
+    }
+  }
 }
 
 async function getBlockNumber() { return parseInt(await rpc("eth_blockNumber"), 16); }
