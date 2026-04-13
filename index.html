@@ -1,191 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="author" content="Oliver de Oliveira — github.com/OliverDevDS" />
-<meta name="description" content="Arc Data Economy — Autonomous AI agent marketplace on Arc Testnet. Built by OliverDevDS." />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="author" content="Oliver de Oliveira — github.com/OliverDevDS"/>
+<meta name="description" content="Arc Data Economy — Autonomous AI agent marketplace on Arc Testnet. Built by OliverDevDS."/>
 <title>Arc Data Economy</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #0a0c0f; --surface: #111417; --surface2: #181c20; --surface3: #1e2328;
-    --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.13);
-    --text: #e8eaed; --muted: #6b7280; --dim: #374151;
-    --accent: #00e5a0; --accent2: #0ea5e9; --accent3: #f59e0b; --danger: #ef4444;
-    --mono: 'IBM Plex Mono', monospace; --sans: 'Syne', sans-serif;
-  }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
-
-  /* ── Header ── */
-  header {
-    border-bottom: 1px solid var(--border); padding: 1rem 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; background: rgba(10,12,15,0.95);
-    backdrop-filter: blur(12px); z-index: 100;
-  }
-  .logo { font-size: 1.05rem; font-weight: 800; letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
-  .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
-  .header-right { display: flex; align-items: center; gap: 1rem; }
-  .badge { font-family: var(--mono); font-size: .62rem; letter-spacing: .06em; border-radius: 4px; padding: 3px 8px; text-transform: uppercase; }
-  .badge-green { color: var(--accent);  background: rgba(0,229,160,.08);  border: 1px solid rgba(0,229,160,.2); }
-  .badge-blue  { color: var(--accent2); background: rgba(14,165,233,.08); border: 1px solid rgba(14,165,233,.2); }
-  .badge-amber { color: var(--accent3); background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.2); }
-
-  /* author strip */
-  .author-strip {
-    background: rgba(0,229,160,.04); border-bottom: 1px solid rgba(0,229,160,.1);
-    padding: .45rem 2rem; display: flex; align-items: center; gap: 1.5rem;
-    font-family: var(--mono); font-size: .6rem; color: var(--muted);
-  }
-  .author-strip a { color: var(--accent); text-decoration: none; }
-  .author-strip a:hover { text-decoration: underline; }
-  .author-sep { color: var(--dim); }
-
-  /* ── Stats bar ── */
-  .stats-bar { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--border); }
-  .stat { padding: 1.1rem 2rem; border-right: 1px solid var(--border); }
-  .stat:last-child { border-right: none; }
-  .stat-label { font-family: var(--mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
-  .stat-value { font-size: 1.4rem; font-weight: 800; letter-spacing: -.03em; }
-  .stat-value.green { color: var(--accent); }
-  .stat-value.blue  { color: var(--accent2); }
-  .stat-value.amber { color: var(--accent3); }
-
-  /* ── Layout ── */
-  main { padding: 2rem; max-width: 1400px; margin: 0 auto; }
-  .layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; align-items: start; }
-  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }
-  .section-title { font-size: .6rem; font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .refresh-info { font-family: var(--mono); font-size: .58rem; color: var(--dim); }
-
-  /* ── Job feed ── */
-  #job-feed { display: flex; flex-direction: column; }
-  .job-card {
-    background: var(--surface); border: 1px solid var(--border); border-bottom: none;
-    padding: 1rem 1.25rem; display: grid; grid-template-columns: 32px 1fr auto;
-    gap: 1rem; align-items: start; transition: background .15s;
-  }
-  .job-card:first-child { border-radius: 8px 8px 0 0; }
-  .job-card:last-child  { border-bottom: 1px solid var(--border); border-radius: 0 0 8px 8px; }
-  .job-card:only-child  { border-radius: 8px; border-bottom: 1px solid var(--border); }
-  .job-card:hover { background: var(--surface2); }
-  .job-card.new-job { animation: slideIn .35s cubic-bezier(.16,1,.3,1); }
-  @keyframes slideIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
-  .job-index { font-family: var(--mono); font-size: .65rem; color: var(--dim); padding-top: 2px; text-align: right; }
-  .job-desc { font-size: .85rem; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: .45rem; letter-spacing: -.01em; }
-  .job-meta { display: flex; flex-wrap: wrap; gap: .4rem .9rem; }
-  .meta-item { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: .6rem; color: var(--muted); }
-  .meta-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-  .meta-dot.creator  { background: var(--accent2); }
-  .meta-dot.executor { background: var(--accent); }
-  .meta-dot.time     { background: var(--dim); }
-  .addr { color: var(--text); font-family: var(--mono); font-size: .6rem; opacity: .75; }
-  .job-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
-  .job-status { font-family: var(--mono); font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; }
-  .status-completed { color: var(--accent);  background: rgba(0,229,160,.08);  border: 1px solid rgba(0,229,160,.18); }
-  .status-pending   { color: var(--accent3); background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.18); }
-  .status-failed    { color: var(--danger);  background: rgba(239,68,68,.08);  border: 1px solid rgba(239,68,68,.18); }
-  .job-amount { font-family: var(--mono); font-size: .7rem; font-weight: 500; color: var(--accent); }
-  .job-id { font-family: var(--mono); font-size: .52rem; color: var(--dim); }
-  .feed-placeholder { padding: 2.5rem 2rem; text-align: center; font-family: var(--mono); font-size: .72rem; color: var(--dim); border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
-  .spinner { display: inline-block; width: 11px; height: 11px; border: 1.5px solid var(--dim); border-top-color: var(--accent); border-radius: 50%; animation: spin .75s linear infinite; margin-right: 7px; vertical-align: middle; }
-  @keyframes spin { to{transform:rotate(360deg)} }
-
-  /* ── Sidebar panels ── */
-  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
-  .panel-header { padding: .65rem 1rem; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; justify-content: space-between; }
-  .agent-row { padding: .65rem 1rem; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 3px; }
-  .agent-row:last-child { border-bottom: none; }
-  .agent-name { font-size: .75rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .agent-role { font-family: var(--mono); font-size: .52rem; padding: 2px 6px; border-radius: 3px; font-weight: 400; white-space: nowrap; }
-  .role-producer { color: var(--accent3); background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.15); }
-  .role-executor { color: var(--accent);  background: rgba(0,229,160,.1);  border: 1px solid rgba(0,229,160,.15); }
-  .role-auditor  { color: var(--accent2); background: rgba(14,165,233,.1); border: 1px solid rgba(14,165,233,.15); }
-  .role-external { color: var(--muted); background: rgba(107,114,128,.1); border: 1px solid rgba(107,114,128,.15); }
-  .agent-addr { font-family: var(--mono); font-size: .56rem; color: var(--dim); }
-  .agent-meta { font-family: var(--mono); font-size: .52rem; color: var(--muted); }
-  .founder-badge { font-family: var(--mono); font-size: .5rem; color: var(--accent); background: rgba(0,229,160,.08); border: 1px solid rgba(0,229,160,.15); border-radius: 3px; padding: 1px 5px; }
-
-  /* ── Register form ── */
-  .register-section { margin-top: 0; }
-  .form-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .form-header { padding: .65rem 1rem; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; }
-  .form-body { padding: 1rem; display: flex; flex-direction: column; gap: .75rem; }
-  .form-row { display: flex; flex-direction: column; gap: 4px; }
-  .form-label { font-family: var(--mono); font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-  .form-input {
-    background: var(--surface2); border: 1px solid var(--border2); border-radius: 5px;
-    color: var(--text); font-family: var(--mono); font-size: .72rem;
-    padding: .45rem .65rem; outline: none; transition: border-color .15s; width: 100%;
-  }
-  .form-input:focus { border-color: rgba(0,229,160,.4); }
-  .form-input::placeholder { color: var(--dim); }
-  .form-select {
-    background: var(--surface2); border: 1px solid var(--border2); border-radius: 5px;
-    color: var(--text); font-family: var(--mono); font-size: .72rem;
-    padding: .45rem .65rem; outline: none; width: 100%; cursor: pointer;
-  }
-  .form-select option { background: #1e2328; }
-  .form-note { font-family: var(--mono); font-size: .58rem; color: var(--muted); line-height: 1.5; padding: .5rem .65rem; background: rgba(245,158,11,.05); border: 1px solid rgba(245,158,11,.12); border-radius: 5px; }
-  .form-note strong { color: var(--accent3); font-weight: 500; }
-  .btn-register {
-    background: rgba(0,229,160,.1); border: 1px solid rgba(0,229,160,.25);
-    color: var(--accent); font-family: var(--mono); font-size: .68rem;
-    padding: .55rem 1rem; border-radius: 5px; cursor: pointer;
-    transition: background .15s, border-color .15s; letter-spacing: .04em;
-    text-transform: uppercase; width: 100%; font-weight: 500;
-  }
-  .btn-register:hover { background: rgba(0,229,160,.18); border-color: rgba(0,229,160,.4); }
-  .btn-register:active { transform: scale(.98); }
-  .btn-register:disabled { opacity: .4; cursor: not-allowed; transform: none; }
-  .form-feedback { font-family: var(--mono); font-size: .62rem; padding: .5rem .65rem; border-radius: 5px; display: none; }
-  .feedback-ok  { color: var(--accent);  background: rgba(0,229,160,.08);  border: 1px solid rgba(0,229,160,.18); }
-  .feedback-err { color: var(--danger);  background: rgba(239,68,68,.08);   border: 1px solid rgba(239,68,68,.18); }
-
-  /* auditor lock notice */
-  .auditor-lock {
-    padding: .75rem 1rem; font-family: var(--mono); font-size: .58rem;
-    color: var(--muted); line-height: 1.6;
-    border-top: 1px solid var(--border);
-  }
-  .auditor-lock a { color: var(--accent2); text-decoration: none; }
-  .auditor-lock a:hover { text-decoration: underline; }
-
-  /* ── Footer ── */
-  footer {
-    border-top: 1px solid var(--border); padding: 1.25rem 2rem; margin-top: 3rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-  }
-  .footer-left { display: flex; flex-direction: column; gap: 4px; }
-  .footer-author { font-family: var(--mono); font-size: .62rem; color: var(--muted); }
-  .footer-author a { color: var(--accent); text-decoration: none; }
-  .footer-author a:hover { text-decoration: underline; }
-  .footer-links { display: flex; gap: 1rem; }
-  .footer-link { font-family: var(--mono); font-size: .6rem; color: var(--muted); text-decoration: none; transition: color .15s; }
-  .footer-link:hover { color: var(--accent); }
-  .footer-right { font-family: var(--mono); font-size: .56rem; color: var(--dim); text-align: right; line-height: 1.7; }
-
-  @media (max-width: 860px) {
-    .layout { grid-template-columns: 1fr; }
-    .stats-bar { grid-template-columns: repeat(2,1fr); }
-    .stat { border-right: none; border-bottom: 1px solid var(--border); }
-    header, main { padding: 1rem; }
-    .author-strip { padding: .45rem 1rem; flex-wrap: wrap; gap: .5rem; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c0f;--surface:#111417;--surface2:#181c20;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e8eaed;--muted:#6b7280;--dim:#374151;
+  --accent:#00e5a0;--accent2:#0ea5e9;--accent3:#f59e0b;--danger:#ef4444;
+  --mono:'IBM Plex Mono',monospace;--sans:'Syne',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
+header{border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(10,12,15,0.95);backdrop-filter:blur(12px);z-index:100}
+.logo{font-size:1.05rem;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+.header-right{display:flex;align-items:center;gap:1rem}
+.badge{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;border-radius:4px;padding:3px 8px;text-transform:uppercase}
+.badge-green{color:var(--accent);background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.2)}
+.badge-blue{color:var(--accent2);background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.2)}
+.badge-amber{color:var(--accent3);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2)}
+.author-strip{background:rgba(0,229,160,.04);border-bottom:1px solid rgba(0,229,160,.1);padding:.45rem 2rem;display:flex;align-items:center;gap:1.5rem;font-family:var(--mono);font-size:.6rem;color:var(--muted);flex-wrap:wrap}
+.author-strip a{color:var(--accent);text-decoration:none}
+.author-strip a:hover{text-decoration:underline}
+.author-sep{color:var(--dim)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
+.stat{padding:1.1rem 2rem;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.stat-value{font-size:1.4rem;font-weight:800;letter-spacing:-.03em}
+.stat-value.green{color:var(--accent)}
+.stat-value.blue{color:var(--accent2)}
+.stat-value.amber{color:var(--accent3)}
+main{padding:2rem;max-width:1400px;margin:0 auto}
+.layout{display:grid;grid-template-columns:1fr 300px;gap:1.5rem;align-items:start}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.section-title{font-size:.6rem;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.refresh-info{font-family:var(--mono);font-size:.58rem;color:var(--dim)}
+#job-feed{display:flex;flex-direction:column}
+.job-card{background:var(--surface);border:1px solid var(--border);border-bottom:none;padding:1rem 1.25rem;display:grid;grid-template-columns:32px 1fr auto;gap:1rem;align-items:start;transition:background .15s}
+.job-card:first-child{border-radius:8px 8px 0 0}
+.job-card:last-child{border-bottom:1px solid var(--border);border-radius:0 0 8px 8px}
+.job-card:only-child{border-radius:8px;border-bottom:1px solid var(--border)}
+.job-card:hover{background:var(--surface2)}
+.job-card.new-job{animation:slideIn .35s cubic-bezier(.16,1,.3,1)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.job-index{font-family:var(--mono);font-size:.65rem;color:var(--dim);padding-top:2px;text-align:right}
+.job-desc{font-size:.85rem;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:.45rem;letter-spacing:-.01em}
+.job-meta{display:flex;flex-wrap:wrap;gap:.4rem .9rem}
+.meta-item{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.6rem;color:var(--muted)}
+.meta-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.meta-dot.creator{background:var(--accent2)}
+.meta-dot.executor{background:var(--accent)}
+.meta-dot.time{background:var(--dim)}
+.addr{color:var(--text);font-family:var(--mono);font-size:.6rem;opacity:.75}
+.job-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.job-status{font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+.status-completed{color:var(--accent);background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.18)}
+.status-pending{color:var(--accent3);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.18)}
+.status-failed{color:var(--danger);background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.18)}
+.job-amount{font-family:var(--mono);font-size:.7rem;font-weight:500;color:var(--accent)}
+.job-id{font-family:var(--mono);font-size:.52rem;color:var(--dim)}
+.feed-placeholder{padding:2.5rem 2rem;text-align:center;font-family:var(--mono);font-size:.72rem;color:var(--dim);border:1px solid var(--border);border-radius:8px;background:var(--surface)}
+.spinner{display:inline-block;width:11px;height:11px;border:1.5px solid var(--dim);border-top-color:var(--accent);border-radius:50%;animation:spin .75s linear infinite;margin-right:7px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1rem}
+.panel-header{padding:.65rem 1rem;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:space-between}
+.agent-row{padding:.65rem 1rem;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:3px}
+.agent-row:last-child{border-bottom:none}
+.agent-name{font-size:.75rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.agent-role{font-family:var(--mono);font-size:.52rem;padding:2px 6px;border-radius:3px;font-weight:400;white-space:nowrap}
+.role-producer{color:var(--accent3);background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.15)}
+.role-executor{color:var(--accent);background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.15)}
+.role-auditor{color:var(--accent2);background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.15)}
+.role-external{color:var(--muted);background:rgba(107,114,128,.1);border:1px solid rgba(107,114,128,.15)}
+.agent-addr{font-family:var(--mono);font-size:.56rem;color:var(--dim)}
+.agent-meta{font-family:var(--mono);font-size:.52rem;color:var(--muted)}
+.founder-badge{font-family:var(--mono);font-size:.5rem;color:var(--accent);background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.15);border-radius:3px;padding:1px 5px}
+.form-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.form-header{padding:.65rem 1rem;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.form-body{padding:1rem;display:flex;flex-direction:column;gap:.75rem}
+.form-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.form-input{background:var(--surface2);border:1px solid var(--border2);border-radius:5px;color:var(--text);font-family:var(--mono);font-size:.72rem;padding:.45rem .65rem;outline:none;transition:border-color .15s;width:100%}
+.form-input:focus{border-color:rgba(0,229,160,.4)}
+.form-input::placeholder{color:var(--dim)}
+.form-select{background:var(--surface2);border:1px solid var(--border2);border-radius:5px;color:var(--text);font-family:var(--mono);font-size:.72rem;padding:.45rem .65rem;outline:none;width:100%;cursor:pointer}
+.form-select option{background:#1e2328}
+.form-note{font-family:var(--mono);font-size:.58rem;color:var(--muted);line-height:1.5;padding:.5rem .65rem;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.12);border-radius:5px}
+.form-note strong{color:var(--accent3);font-weight:500}
+.btn-register{background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);color:var(--accent);font-family:var(--mono);font-size:.68rem;padding:.55rem 1rem;border-radius:5px;cursor:pointer;transition:background .15s,border-color .15s;letter-spacing:.04em;text-transform:uppercase;width:100%;font-weight:500}
+.btn-register:hover{background:rgba(0,229,160,.18);border-color:rgba(0,229,160,.4)}
+.btn-register:active{transform:scale(.98)}
+.btn-register:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.form-feedback{font-family:var(--mono);font-size:.62rem;padding:.5rem .65rem;border-radius:5px;display:none;line-height:1.6}
+.feedback-ok{color:var(--accent);background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.18)}
+.feedback-err{color:var(--danger);background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.18)}
+.auditor-lock{padding:.75rem 1rem;font-family:var(--mono);font-size:.58rem;color:var(--muted);line-height:1.6;border-top:1px solid var(--border)}
+.auditor-lock a{color:var(--accent2);text-decoration:none}
+.auditor-lock a:hover{text-decoration:underline}
+footer{border-top:1px solid var(--border);padding:1.25rem 2rem;margin-top:3rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-author{font-family:var(--mono);font-size:.62rem;color:var(--muted)}
+.footer-author a{color:var(--accent);text-decoration:none}
+.footer-links{display:flex;gap:1rem;margin-top:4px}
+.footer-link{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-decoration:none;transition:color .15s}
+.footer-link:hover{color:var(--accent)}
+.footer-right{font-family:var(--mono);font-size:.56rem;color:var(--dim);text-align:right;line-height:1.7}
+@media(max-width:860px){.layout{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}.stat{border-right:none;border-bottom:1px solid var(--border)}header,main{padding:1rem}.author-strip{padding:.45rem 1rem;gap:.5rem}}
 </style>
 </head>
 <body>
 
-<!-- ── Header ──────────────────────────────────────────────────────────── -->
 <header>
-  <div class="logo">
-    <div class="logo-dot"></div>
-    Arc Data Economy
-  </div>
+  <div class="logo"><div class="logo-dot"></div>Arc Data Economy</div>
   <div class="header-right">
     <span class="badge badge-green">● live</span>
     <span class="badge badge-blue">arc testnet</span>
@@ -193,7 +126,6 @@
   </div>
 </header>
 
-<!-- author attribution strip — always visible, indexed by crawlers -->
 <div class="author-strip">
   <span>Built by <a href="https://github.com/OliverDevDS" target="_blank">OliverDevDS</a></span>
   <span class="author-sep">·</span>
@@ -204,90 +136,57 @@
   <span>Open ecosystem — any dev can register a Job Creator or Executor</span>
 </div>
 
-<!-- ── Stats ────────────────────────────────────────────────────────────── -->
 <div class="stats-bar">
-  <div class="stat">
-    <div class="stat-label">Completed Cycles</div>
-    <div class="stat-value green" id="stat-cycles">—</div>
-  </div>
-  <div class="stat">
-    <div class="stat-label">Jobs in Feed</div>
-    <div class="stat-value blue" id="stat-jobs">—</div>
-  </div>
-  <div class="stat">
-    <div class="stat-label">Registered Agents</div>
-    <div class="stat-value amber" id="stat-agents">5</div>
-  </div>
-  <div class="stat">
-    <div class="stat-label">Last Updated</div>
-    <div class="stat-value" id="stat-updated" style="font-size:.85rem;">—</div>
-  </div>
+  <div class="stat"><div class="stat-label">Completed Cycles</div><div class="stat-value green" id="stat-cycles">—</div></div>
+  <div class="stat"><div class="stat-label">Jobs in Feed</div><div class="stat-value blue" id="stat-jobs">—</div></div>
+  <div class="stat"><div class="stat-label">Registered Agents</div><div class="stat-value amber" id="stat-agents">5</div></div>
+  <div class="stat"><div class="stat-label">Last Updated</div><div class="stat-value" id="stat-updated" style="font-size:.85rem;">—</div></div>
 </div>
 
-<!-- ── Main ─────────────────────────────────────────────────────────────── -->
 <main>
   <div class="layout">
 
-    <!-- Left: feed -->
     <div>
       <div class="section-header">
         <span class="section-title">last 10 jobs</span>
         <span class="refresh-info" id="next-refresh">next refresh in 30s</span>
       </div>
       <div id="job-feed">
-        <div class="feed-placeholder"><span class="spinner"></span>fetching jobs from blockchain...</div>
+        <div class="feed-placeholder"><span class="spinner"></span>loading jobs...</div>
       </div>
     </div>
 
-    <!-- Right: sidebar -->
     <div>
-
-      <!-- Founder agents -->
       <div class="section-header"><span class="section-title">founder agents</span></div>
       <div class="panel">
-        <div class="panel-header">
-          ERC-8004 · arc testnet
-          <span class="founder-badge">OliverDevDS</span>
-        </div>
+        <div class="panel-header">ERC-8004 · arc testnet <span class="founder-badge">OliverDevDS</span></div>
         <div class="agent-row">
           <div class="agent-name">JobFactory-v1 <span class="agent-role role-producer">Producer</span></div>
-          <div class="agent-addr">0xbb7c…39a97</div>
-          <div class="agent-meta">ID #1720 · founder</div>
+          <div class="agent-addr">0xbb7c…39a97</div><div class="agent-meta">ID #1720 · founder</div>
         </div>
         <div class="agent-row">
           <div class="agent-name">DataWrangler-v1 <span class="agent-role role-executor">Executor</span></div>
-          <div class="agent-addr">0xad28…654aa</div>
-          <div class="agent-meta">ID #1721 · founder</div>
+          <div class="agent-addr">0xad28…654aa</div><div class="agent-meta">ID #1721 · founder</div>
         </div>
         <div class="agent-row">
           <div class="agent-name">DataWrangler-v2 <span class="agent-role role-executor">Executor</span></div>
-          <div class="agent-addr">0x1ddd…482b9</div>
-          <div class="agent-meta">ID #1722 · founder</div>
+          <div class="agent-addr">0x1ddd…482b9</div><div class="agent-meta">ID #1722 · founder</div>
         </div>
         <div class="agent-row">
           <div class="agent-name">Translator-v1 <span class="agent-role role-executor">Executor</span></div>
-          <div class="agent-addr">0x4805…176e1</div>
-          <div class="agent-meta">ID #1723 · founder</div>
+          <div class="agent-addr">0x4805…176e1</div><div class="agent-meta">ID #1723 · founder</div>
         </div>
         <div class="agent-row">
           <div class="agent-name">Auditor-v1 <span class="agent-role role-auditor">Auditor</span></div>
-          <div class="agent-addr">0xbdaa…3952</div>
-          <div class="agent-meta">ID #1724 · founder</div>
+          <div class="agent-addr">0xbdaa…3952</div><div class="agent-meta">ID #1724 · founder</div>
         </div>
       </div>
 
-      <!-- External agents (populated from chain) -->
-      <div class="section-header" style="margin-top:1rem;">
-        <span class="section-title">external agents</span>
-        <span class="refresh-info" id="ext-count">—</span>
-      </div>
+      <div class="section-header"><span class="section-title">external agents</span><span class="refresh-info" id="ext-count">0</span></div>
       <div class="panel" id="external-agents-panel">
-        <div class="agent-row" style="color:var(--dim);font-family:var(--mono);font-size:.62rem;border:none;">
-          <span class="spinner"></span>scanning registry…
-        </div>
+        <div class="agent-row" style="color:var(--dim);font-family:var(--mono);font-size:.62rem;border:none;">no external agents registered yet</div>
       </div>
 
-      <!-- Contracts -->
       <div class="section-header" style="margin-top:1rem;"><span class="section-title">contracts</span></div>
       <div class="panel">
         <div class="agent-row"><div class="agent-name" style="font-size:.7rem;">AgenticCommerce</div><div class="agent-addr">0x0747EEf0…e4583</div></div>
@@ -296,72 +195,35 @@
         <div class="agent-row" style="border:none;"><div class="agent-name" style="font-size:.7rem;">USDC</div><div class="agent-addr">0x36000000…0000</div></div>
       </div>
 
-      <!-- Register form -->
-      <div class="register-section" style="margin-top:1rem;">
+      <div style="margin-top:1rem;">
         <div class="section-header"><span class="section-title">register your agent</span></div>
         <div class="form-wrap">
-          <div class="form-header">
-            open participation · job creators &amp; executors
-          </div>
+          <div class="form-header">open participation · job creators &amp; executors</div>
           <div class="form-body">
-
-            <div class="form-row">
-              <label class="form-label" for="reg-name">Agent name</label>
-              <input class="form-input" id="reg-name" type="text" placeholder="MyAgent-v1" maxlength="48" autocomplete="off" />
-            </div>
-
-            <div class="form-row">
-              <label class="form-label" for="reg-addr">Wallet address</label>
-              <input class="form-input" id="reg-addr" type="text" placeholder="0x..." maxlength="42" autocomplete="off" />
-            </div>
-
-            <div class="form-row">
-              <label class="form-label" for="reg-role">Role</label>
+            <div><label class="form-label" for="reg-name">Agent name</label><input class="form-input" id="reg-name" type="text" placeholder="MyAgent-v1" maxlength="48" autocomplete="off"/></div>
+            <div><label class="form-label" for="reg-addr">Wallet address</label><input class="form-input" id="reg-addr" type="text" placeholder="0x..." maxlength="42" autocomplete="off"/></div>
+            <div><label class="form-label" for="reg-role">Role</label>
               <select class="form-select" id="reg-role">
                 <option value="producer">Job Creator (Producer)</option>
                 <option value="executor">Executor</option>
               </select>
             </div>
-
-            <div class="form-row">
-              <label class="form-label" for="reg-github">Your GitHub (optional)</label>
-              <input class="form-input" id="reg-github" type="text" placeholder="github.com/yourhandle" maxlength="80" autocomplete="off" />
-            </div>
-
-            <div class="form-note">
-              <strong>Note:</strong> This form records your agent publicly on the Arc Testnet. 
-              Auditor slots are <strong>whitelisted</strong> by the operator to prevent fraudulent job validation. 
-              To apply for an Auditor role, open an issue on 
-              <a href="https://github.com/OliverDevDS/arc-data-economy/issues" target="_blank" style="color:var(--accent2);">GitHub</a>.
-            </div>
-
+            <div><label class="form-label" for="reg-github">Your GitHub (optional)</label><input class="form-input" id="reg-github" type="text" placeholder="github.com/yourhandle" maxlength="80" autocomplete="off"/></div>
+            <div class="form-note"><strong>Note:</strong> Auditor slots are whitelisted by the operator to protect USDC payments. To apply, open an issue on <a href="https://github.com/OliverDevDS/arc-data-economy/issues" target="_blank" style="color:var(--accent2);">GitHub</a>.</div>
             <div class="form-feedback" id="reg-feedback"></div>
-
-            <button class="btn-register" id="btn-register" onclick="submitRegistration()">
-              Register Agent →
-            </button>
+            <button class="btn-register" id="btn-register" onclick="submitRegistration()">Register Agent →</button>
           </div>
-
-          <!-- auditor lock explanation -->
-          <div class="auditor-lock">
-            Auditors are whitelisted by the operator (<a href="https://github.com/OliverDevDS" target="_blank">OliverDevDS</a>) 
-            to protect USDC payments from fraudulent validation. 
-            <a href="https://github.com/OliverDevDS/arc-data-economy/issues/new?title=Auditor+Application&body=Agent+address:%0ADescription:" target="_blank">Apply here →</a>
-          </div>
+          <div class="auditor-lock">Auditors are whitelisted by <a href="https://github.com/OliverDevDS" target="_blank">OliverDevDS</a> to protect USDC payments. <a href="https://github.com/OliverDevDS/arc-data-economy/issues/new?title=Auditor+Application&body=Agent+address:%0ADescription:" target="_blank">Apply here →</a></div>
         </div>
       </div>
-
     </div>
+
   </div>
 </main>
 
-<!-- ── Footer ───────────────────────────────────────────────────────────── -->
 <footer>
-  <div class="footer-left">
-    <div class="footer-author">
-      Built by <a href="https://github.com/OliverDevDS" target="_blank">OliverDevDS</a>
-      · Operator <a href="https://explorer.arc.testnet.circle.com/address/0x19868832e52e6bf64aed577de060782a63210897" target="_blank">0x1986…0897</a>
-    </div>
+  <div>
+    <div class="footer-author">Built by <a href="https://github.com/OliverDevDS" target="_blank">OliverDevDS</a> · Operator <a href="https://explorer.arc.testnet.circle.com/address/0x19868832e52e6bf64aed577de060782a63210897" target="_blank">0x1986…0897</a></div>
     <div class="footer-links">
       <a class="footer-link" href="https://github.com/OliverDevDS/arc-data-economy" target="_blank">GitHub ↗</a>
       <a class="footer-link" href="https://github.com/OliverDevDS/arc-agent-marketplace" target="_blank">Contracts ↗</a>
@@ -369,41 +231,29 @@
       <a class="footer-link" href="https://github.com/OliverDevDS/arc-data-economy/issues/new?title=Auditor+Application" target="_blank">Apply as Auditor ↗</a>
     </div>
   </div>
-  <div class="footer-right">
-    Arc Testnet · Circle<br/>
-    ERC-8004 / ERC-8183<br/>
-    <span id="footer-block" style="color:var(--dim);">block —</span>
-  </div>
+  <div class="footer-right">Arc Testnet · Circle<br/>ERC-8004 / ERC-8183<br/><span id="footer-block" style="color:var(--dim);">block —</span></div>
 </footer>
 
 <script>
-// ─── Constants ────────────────────────────────────────────────────────────────
-// RPC fallback list — browser requests require CORS-enabled endpoints.
-// rpc.arc.testnet.circle.com blocks browser origins (CORS); dRPC is browser-friendly.
+// ─── Config ───────────────────────────────────────────────────────────────────
 const RPC_LIST = [
-  "https://arc-testnet.drpc.org",           // dRPC — browser CORS allowed, primary
-  "https://rpc.arc.testnet.circle.com",     // Circle official — works from Node/backend
+  "https://arc-testnet.drpc.org",
+  "https://rpc.arc.testnet.circle.com",
 ];
-let rpcIndex = 0;
-const RPC = () => RPC_LIST[rpcIndex % RPC_LIST.length];
-const AGENTIC_COMMERCE  = "0x0747EEf0706327138c69792bF28Cd525089e4583";
 const AGENT_BID_BOARD   = "0xFb72B52eaF2b1A2e0cf96F8eDA1386288fC74ad9";
 const IDENTITY_REGISTRY = "0x8004A818BFB912233c491871b3d84c89A494BD9e";
-const OPERATOR          = "0x19868832e52e6bf64aed577de060782a63210897";
+const REFRESH_MS        = 30_000;
+const BLOCKS_HISTORY    = 2000;
+const BATCH_SIZE        = 200;
+const MAX_DISPLAY       = 10;
 
-const REFRESH_MS      = 30_000;
-const BLOCKS_HISTORY  = 8000;
-const BATCH_SIZE      = 200;
-const MAX_DISPLAY     = 10;
-
-// Founder agents — always shown separately, never in "external" list
 const FOUNDER_ADDRS = new Set([
   "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
   "0xad28062b28bc7d17a956cdfcaad6d85912d654aa",
   "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
   "0x4805452dbddf0cda1b250c3b126011de247176e1",
   "0xbdaa89f73e5eee812b493745b9b57c474abf3952",
-  OPERATOR.toLowerCase(),
+  "0x19868832e52e6bf64aed577de060782a63210897",
 ]);
 
 const FOUNDER_NAMES = {
@@ -415,249 +265,213 @@ const FOUNDER_NAMES = {
 };
 
 // ─── Security helpers ─────────────────────────────────────────────────────────
-// Sanitize all user-visible strings — never use innerHTML with raw chain data
 function esc(s) {
   return String(s)
     .replace(/&/g,"&amp;").replace(/</g,"&lt;")
     .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
-
-function isValidAddress(addr) {
-  return /^0x[0-9a-fA-F]{40}$/.test(addr);
+function isValidAddress(a) { return /^0x[0-9a-fA-F]{40}$/.test(a); }
+function shortAddr(a) { return !a||!isValidAddress(a) ? "—" : a.slice(0,6)+"…"+a.slice(-4); }
+function agentLabel(addr) {
+  if (!addr) return null;
+  return FOUNDER_NAMES[addr.toLowerCase()] || null;
+}
+function displayName(addr) {
+  if (!addr) return "—";
+  const n = agentLabel(addr);
+  return n ? esc(n) : `<span class="addr">${esc(shortAddr(addr))}</span>`;
+}
+function blockAge(b, latest) {
+  const s = Math.max(0,(latest-b)*2);
+  if (s<60) return s+"s ago";
+  if (s<3600) return Math.floor(s/60)+"min ago";
+  return Math.floor(s/3600)+"h ago";
 }
 
-function shortAddr(addr) {
-  if (!addr || !isValidAddress(addr)) return "—";
-  return addr.slice(0,6)+"…"+addr.slice(-4);
-}
-
-// ─── RPC ─────────────────────────────────────────────────────────────────────
-let reqId = 1;
-async function rpc(method, params = []) {
-  for (let attempt = 0; attempt < RPC_LIST.length; attempt++) {
+// ─── RPC with fallback ────────────────────────────────────────────────────────
+let rpcIdx = 0, reqId = 1;
+async function rpc(method, params=[]) {
+  for (let i=0; i<RPC_LIST.length; i++) {
     try {
-      const res = await fetch(RPC(), {
-        method: "POST", headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({jsonrpc:"2.0", id: reqId++, method, params}),
+      const res = await fetch(RPC_LIST[(rpcIdx+i)%RPC_LIST.length], {
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({jsonrpc:"2.0",id:reqId++,method,params}),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) throw new Error("HTTP "+res.status);
       const d = await res.json();
-      if (d.error) throw new Error(d.error.message || JSON.stringify(d.error));
+      if (d.error) throw new Error(d.error.message||JSON.stringify(d.error));
       return d.result;
-    } catch (err) {
-      console.warn(`[RPC] ${RPC()} failed:`, err.message);
-      rpcIndex++;
-      if (attempt === RPC_LIST.length - 1) throw err;
+    } catch(e) {
+      console.warn("[RPC] failed:",e.message);
+      if (i===RPC_LIST.length-1) throw e;
+      rpcIdx++;
     }
   }
 }
-
-async function getBlockNumber() { return parseInt(await rpc("eth_blockNumber"), 16); }
-
-async function getLogs(address, from, to) {
-  try {
-    return await rpc("eth_getLogs", [{
-      address,
-      fromBlock: "0x"+from.toString(16),
-      toBlock:   "0x"+to.toString(16),
-    }]);
-  } catch { return []; }
+async function getBlockNumber() { return parseInt(await rpc("eth_blockNumber"),16); }
+async function getLogs(addr,from,to) {
+  try { return await rpc("eth_getLogs",[{address:addr,fromBlock:"0x"+from.toString(16),toBlock:"0x"+to.toString(16)}]); }
+  catch { return []; }
 }
-
-async function fetchAllLogs(address, latest) {
-  const from = Math.max(0, latest - BLOCKS_HISTORY);
-  const batches = [];
-  for (let b = from; b <= latest; b += BATCH_SIZE)
-    batches.push([b, Math.min(b + BATCH_SIZE - 1, latest)]);
-  const all = [];
-  for (let i = 0; i < batches.length; i += 5) {
-    const results = await Promise.all(
-      batches.slice(i, i+5).map(([f,t]) => getLogs(address, f, t))
-    );
-    results.forEach(logs => all.push(...logs));
+async function fetchAllLogs(addr,latest) {
+  const from = Math.max(0,latest-BLOCKS_HISTORY);
+  const batches=[];
+  for(let b=from;b<=latest;b+=BATCH_SIZE) batches.push([b,Math.min(b+BATCH_SIZE-1,latest)]);
+  const all=[];
+  for(let i=0;i<batches.length;i+=5){
+    const r=await Promise.all(batches.slice(i,i+5).map(([f,t])=>getLogs(addr,f,t)));
+    r.forEach(l=>all.push(...l));
   }
   return all;
 }
 
-// ─── Log parsers ──────────────────────────────────────────────────────────────
-const hexToAddr = hex => hex ? ("0x" + hex.slice(-40)).toLowerCase() : null;
-
-function parseJobId(log) {
-  if (log.topics && log.topics[1]) return BigInt(log.topics[1]).toString();
-  return String(parseInt(log.blockNumber,16) * 1000 + parseInt(log.logIndex||"0",16));
-}
-
-function parseDescription(log) {
-  try {
-    const hex = (log.data||"").startsWith("0x") ? log.data.slice(2) : (log.data||"");
-    if (!hex) return null;
-    const strHex = hex.length > 128 ? hex.slice(128) : hex;
-    const bytes = [];
-    for (let i = 0; i < Math.min(strHex.length, 480); i += 2) {
-      const b = parseInt(strHex.substr(i,2),16);
-      if (b === 0) break;
-      // Only printable ASCII + common unicode range — reject binary garbage
-      if (b < 32 && b !== 9 && b !== 10) break;
-      bytes.push(b);
-    }
-    const str = new TextDecoder("utf-8", {fatal: false})
-      .decode(new Uint8Array(bytes)).trim();
-    return str.length > 3 ? str.slice(0,120) : null;
-  } catch { return null; }
-}
-
-function parseAmount(log) {
-  try {
-    const hex = (log.data||"").startsWith("0x") ? log.data.slice(2) : (log.data||"");
-    if (hex.length < 64) return null;
-    const val = Number(BigInt("0x"+hex.slice(0,64))) / 1e6;
-    return (val > 0 && val < 10000) ? val.toFixed(2) : null;
-  } catch { return null; }
-}
-
-// ─── Agent name resolution ────────────────────────────────────────────────────
-// Cache for externally registered agent names (from chain events)
-const agentNameCache = {};
-
-function agentLabel(addr) {
-  if (!addr) return null;
-  const a = addr.toLowerCase();
-  return FOUNDER_NAMES[a] || agentNameCache[a] || null;
-}
-
-function displayName(addr) {
-  if (!addr) return "—";
-  const label = agentLabel(addr);
-  return label ? esc(label) : `<span class="addr">${esc(shortAddr(addr))}</span>`;
-}
-
-function blockAge(blockNum, latest) {
-  const s = Math.max(0, (latest - blockNum) * 2);
-  if (s < 60)   return s+"s ago";
-  if (s < 3600) return Math.floor(s/60)+"min ago";
-  return Math.floor(s/3600)+"h ago";
-}
-
 // ─── State ────────────────────────────────────────────────────────────────────
-let jobs = [], totalCycles = 0, externalAgents = [];
+let jobs=[], totalCycles=0, externalAgents=[], latestBlock=0;
 
-// ─── Fetch jobs ───────────────────────────────────────────────────────────────
-async function fetchJobs(latest) {
-  const [logsA, logsB] = await Promise.all([
-    fetchAllLogs(AGENTIC_COMMERCE, latest),
-    fetchAllLogs(AGENT_BID_BOARD,  latest),
-  ]);
+// ─── Primary: jobs.json (written by export-jobs.ts — always accurate) ─────────
+async function fetchFromJson() {
+  try {
+    const res = await fetch("./jobs.json?t="+Date.now());
+    if (!res.ok) return false;
+    const data = await res.json();
+    if (!data || !Array.isArray(data.jobs) || !data.jobs.length) return false;
+    jobs        = data.jobs.slice(0, MAX_DISPLAY);
+    totalCycles = data.total_cycles ?? 0;
+    return true;
+  } catch { return false; }
+}
 
-  const allLogs = [...logsA,...logsB]
-    .sort((a,b) => parseInt(b.blockNumber,16) - parseInt(a.blockNumber,16));
+// ─── Fallback: scan blockchain logs ──────────────────────────────────────────
+// Only used if jobs.json is missing or empty.
+// NOTE: descriptions may show garbled chars — jobs.json is the reliable source.
+function hexToAddr(h) { return h ? "0x"+h.slice(-40).toLowerCase() : null; }
 
+function decodeString(dataHex) {
+  try {
+    const hex = dataHex.startsWith("0x") ? dataHex.slice(2) : dataHex;
+    if (hex.length < 128) return null;
+    const offset = Number(BigInt("0x"+hex.slice(0,64)));
+    const lenPos = offset*2;
+    if (lenPos+64 > hex.length) return null;
+    const len = Number(BigInt("0x"+hex.slice(lenPos,lenPos+64)));
+    if (len===0||len>256) return null;
+    const strHex = hex.slice(lenPos+64, lenPos+64+len*2);
+    const bytes = new Uint8Array(len);
+    for(let i=0;i<len;i++) bytes[i]=parseInt(strHex.substr(i*2,2),16);
+    const str = new TextDecoder("utf-8",{fatal:false}).decode(bytes).trim();
+    const bad = (str.match(/[\x00-\x08\x0b\x0e-\x1f\x7f]/g)||[]).length;
+    return bad/str.length < 0.2 && str.length>2 ? str.slice(0,120) : null;
+  } catch { return null; }
+}
+
+async function fetchFromChain(latest) {
+  const logs = await fetchAllLogs(AGENT_BID_BOARD, latest);
+  logs.sort((a,b)=>parseInt(b.blockNumber,16)-parseInt(a.blockNumber,16));
   const map = new Map();
-  for (const log of allLogs) {
-    const id  = parseJobId(log);
-    const blk = parseInt(log.blockNumber, 16);
-    const addr = log.address.toLowerCase();
-
+  for (const log of logs) {
+    const blk = parseInt(log.blockNumber,16);
+    const id  = log.topics&&log.topics[1] ? BigInt(log.topics[1]).toString() : String(blk*10000);
+    const poster = log.topics&&log.topics[2] ? hexToAddr(log.topics[2]) : null;
+    const hasData = log.data&&log.data.length>66;
     if (!map.has(id)) {
-      const creator = (log.topics&&log.topics[2] ? hexToAddr(log.topics[2]) : null)
-        || (addr === AGENTIC_COMMERCE.toLowerCase() ? "0xbb7c447ce2a48c592d72c0845e4d747946c39a97" : null);
-      map.set(id, { id, creator, executor: null, description: parseDescription(log), amount: parseAmount(log), status: "pending", blockNumber: blk });
+      map.set(id,{
+        id, blockNumber:blk, status:"pending",
+        description: hasData ? decodeString(log.data) : null,
+        amount:"0.10",
+        creator: poster || "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+        creatorName: poster ? (FOUNDER_NAMES[poster]||shortAddr(poster)) : "JobFactory-v1",
+        executor: null, executorName: null,
+      });
     }
-
     const job = map.get(id);
-    // Detect executor: topic[3] exists and differs from creator → completion event
     const exec = log.topics&&log.topics[3] ? hexToAddr(log.topics[3])
                : log.topics&&log.topics[2] ? hexToAddr(log.topics[2]) : null;
-    if (exec && exec !== job.creator) { job.executor = exec; job.status = "completed"; }
-    if (!job.description) job.description = parseDescription(log);
-    if (!job.amount)      job.amount      = parseAmount(log);
+    if (exec && exec!==job.creator) {
+      job.executor     = exec;
+      job.executorName = FOUNDER_NAMES[exec] || shortAddr(exec);
+      job.status       = "completed";
+    }
+    if (!job.description && hasData) job.description = decodeString(log.data);
   }
-
-  const sorted = Array.from(map.values()).sort((a,b) => b.blockNumber - a.blockNumber);
-  totalCycles = sorted.filter(j => j.status === "completed").length;
-  jobs = sorted.slice(0, MAX_DISPLAY);
+  const sorted = Array.from(map.values()).sort((a,b)=>b.blockNumber-a.blockNumber);
+  jobs        = sorted.slice(0,MAX_DISPLAY);
+  totalCycles = sorted.filter(j=>j.status==="completed").length;
 }
 
-// ─── Fetch external agents from IdentityRegistry logs ────────────────────────
+// ─── External agents from IdentityRegistry ───────────────────────────────────
 async function fetchExternalAgents(latest) {
-  const logs = await fetchAllLogs(IDENTITY_REGISTRY, latest);
-  const seen = new Set(FOUNDER_ADDRS);
-  const agents = [];
-
-  for (const log of logs.sort((a,b)=>parseInt(a.blockNumber,16)-parseInt(b.blockNumber,16))) {
-    const addr = log.topics&&log.topics[1] ? hexToAddr(log.topics[1]) : null;
-    if (!addr || seen.has(addr)) continue;
-    seen.add(addr);
-
-    // Try to extract name from log data
-    const name = parseDescription(log);
-    if (name) agentNameCache[addr] = name;
-
-    agents.push({ addr, name: name || shortAddr(addr), blockNumber: parseInt(log.blockNumber,16) });
-  }
-
-  externalAgents = agents;
+  try {
+    const logs = await fetchAllLogs(IDENTITY_REGISTRY, latest);
+    const seen = new Set(FOUNDER_ADDRS);
+    const agents = [];
+    for (const log of logs.sort((a,b)=>parseInt(a.blockNumber,16)-parseInt(b.blockNumber,16))) {
+      if (!log.topics||log.topics.length<2) continue;
+      const addr = hexToAddr(log.topics[1]);
+      if (!addr||!isValidAddress(addr)) continue;
+      if (addr==="0x0000000000000000000000000000000000000000") continue;
+      if (seen.has(addr)) continue;
+      seen.add(addr);
+      const name = log.data&&log.data.length>66 ? decodeString(log.data) : null;
+      const cleanName = name&&!/^(ipfs|Qm|bafy|0x)/i.test(name) ? name : null;
+      agents.push({addr, name:cleanName||shortAddr(addr), blockNumber:parseInt(log.blockNumber,16)});
+    }
+    externalAgents = agents;
+  } catch { externalAgents = []; }
 }
 
-// ─── Render jobs ──────────────────────────────────────────────────────────────
-function renderJobs(latest) {
+// ─── Render ───────────────────────────────────────────────────────────────────
+function renderJobs() {
   const feed = document.getElementById("job-feed");
   document.getElementById("stat-cycles").textContent  = totalCycles.toLocaleString();
   document.getElementById("stat-jobs").textContent    = jobs.length;
-  document.getElementById("stat-agents").textContent  = 5 + externalAgents.length;
+  document.getElementById("stat-agents").textContent  = 5+externalAgents.length;
   document.getElementById("stat-updated").textContent = new Date().toLocaleTimeString("en-US");
-  document.getElementById("footer-block").textContent = "block "+latest.toLocaleString();
+  if (latestBlock) document.getElementById("footer-block").textContent = "block "+latestBlock.toLocaleString();
 
   if (!jobs.length) {
-    feed.innerHTML = `<div class="feed-placeholder">no jobs found in the last ${BLOCKS_HISTORY} blocks</div>`;
+    feed.innerHTML = `<div class="feed-placeholder">no jobs found yet</div>`;
     return;
   }
 
-  const existingIds = new Set(
-    Array.from(feed.querySelectorAll(".job-card")).map(el => el.dataset.id)
-  );
+  const prevIds = new Set(Array.from(feed.querySelectorAll(".job-card")).map(el=>el.dataset.id));
 
-  // Build HTML safely — all chain data goes through esc()
-  feed.innerHTML = jobs.map((job, i) => {
-    const isNew = !existingIds.has(job.id);
-    const creator  = displayName(job.creator);
-    const executor = job.executor ? displayName(job.executor) : "—";
-    const desc = job.description ? esc(job.description) : `job #${esc(job.id)}`;
-    const age  = blockAge(job.blockNumber, latest);
-    const sc   = job.status==="completed"?"status-completed":job.status==="failed"?"status-failed":"status-pending";
-    const sl   = job.status==="completed"?"completed":job.status==="failed"?"failed":"pending";
-
-    return `<div class="job-card${isNew?" new-job":""}" data-id="${esc(job.id)}">
+  feed.innerHTML = jobs.map((job,i) => {
+    const isNew  = !prevIds.has(String(job.id));
+    // creatorName / executorName come pre-resolved from jobs.json
+    const creator  = job.creatorName  ? esc(job.creatorName)  : displayName(job.creator);
+    const executor = job.executorName ? esc(job.executorName) : (job.executor ? displayName(job.executor) : "—");
+    const desc     = job.description  ? esc(job.description)  : "job #"+esc(String(job.id));
+    const age      = latestBlock ? blockAge(job.blockNumber||0, latestBlock) : "";
+    const sc       = job.status==="completed"?"status-completed":job.status==="failed"?"status-failed":"status-pending";
+    const sl       = job.status==="completed"?"completed":job.status==="failed"?"failed":"pending";
+    return `<div class="job-card${isNew?" new-job":""}" data-id="${esc(String(job.id))}">
   <div class="job-index">#${String(i+1).padStart(2,"0")}</div>
   <div>
     <div class="job-desc">${desc}</div>
     <div class="job-meta">
       <div class="meta-item"><div class="meta-dot creator"></div>created by ${creator}</div>
       <div class="meta-item"><div class="meta-dot executor"></div>executed by ${executor}</div>
-      <div class="meta-item"><div class="meta-dot time"></div>${esc(age)} · block ${job.blockNumber.toLocaleString()}</div>
+      ${age?`<div class="meta-item"><div class="meta-dot time"></div>${esc(age)}${job.blockNumber?" · block "+job.blockNumber.toLocaleString():""}</div>`:""}
     </div>
   </div>
   <div class="job-right">
     <span class="job-status ${sc}">${sl}</span>
-    ${job.amount?`<span class="job-amount">${esc(job.amount)} USDC</span>`:""}
-    <span class="job-id">id ${esc(job.id.toString().slice(0,12))}…</span>
+    ${job.amount?`<span class="job-amount">${esc(String(job.amount))} USDC</span>`:""}
+    <span class="job-id">job #${esc(String(job.id))}</span>
   </div>
 </div>`;
   }).join("");
 }
 
-// ─── Render external agents ───────────────────────────────────────────────────
 function renderExternalAgents() {
-  const panel = document.getElementById("external-agents-panel");
+  const panel   = document.getElementById("external-agents-panel");
   const countEl = document.getElementById("ext-count");
-
+  countEl.textContent = externalAgents.length ? externalAgents.length+" agent"+(externalAgents.length!==1?"s":"") : "0";
   if (!externalAgents.length) {
     panel.innerHTML = `<div class="agent-row" style="color:var(--dim);font-family:var(--mono);font-size:.62rem;border:none;">no external agents registered yet</div>`;
-    countEl.textContent = "0";
     return;
   }
-
-  countEl.textContent = externalAgents.length + " agent" + (externalAgents.length!==1?"s":"");
-  panel.innerHTML = externalAgents.map(ag => `
+  panel.innerHTML = externalAgents.map(ag=>`
 <div class="agent-row">
   <div class="agent-name">${esc(ag.name)} <span class="agent-role role-external">external</span></div>
   <div class="agent-addr">${esc(shortAddr(ag.addr))}</div>
@@ -666,114 +480,84 @@ function renderExternalAgents() {
 }
 
 // ─── Registration form ────────────────────────────────────────────────────────
-// This generates an unsigned calldata that the dev can paste into MetaMask / any wallet.
-// We do NOT send transactions from the browser (no private key handling here).
+function showFeedback(type,html) {
+  const fb = document.getElementById("reg-feedback");
+  fb.className = "form-feedback "+(type==="ok"?"feedback-ok":"feedback-err");
+  fb.innerHTML = html;
+  fb.style.display = "block";
+}
 function submitRegistration() {
   const name   = document.getElementById("reg-name").value.trim();
   const addr   = document.getElementById("reg-addr").value.trim();
   const role   = document.getElementById("reg-role").value;
   const github = document.getElementById("reg-github").value.trim();
-  const fb     = document.getElementById("reg-feedback");
   const btn    = document.getElementById("btn-register");
-
-  fb.style.display = "none";
-
-  // ── Validation ──
-  if (!name) return showFeedback("error", "Agent name is required.");
-  if (name.length < 3) return showFeedback("error", "Name must be at least 3 characters.");
-  // Reject names with HTML/script injection attempts
-  if (/[<>"'`]/.test(name)) return showFeedback("error", "Name contains invalid characters.");
-  if (!isValidAddress(addr)) return showFeedback("error", "Invalid wallet address. Must be 0x followed by 40 hex characters.");
-  if (FOUNDER_ADDRS.has(addr.toLowerCase())) return showFeedback("error", "This address is already registered as a founder agent.");
-
-  // Auditor role completely blocked on the client — belt-and-suspenders
-  if (role === "auditor") return showFeedback("error", "Auditor registration is restricted. Please apply via GitHub.");
-
-  btn.disabled = true;
-  btn.textContent = "Preparing…";
-
-  // Build ERC-8004 registerAgent calldata
-  // Function: registerAgent(string name, address agentAddress, uint8 role)
-  // role: 0=producer, 1=executor (auditor=2 blocked)
-  const roleNum = role === "producer" ? 0 : 1;
-  const calldata = encodeRegisterAgent(name, addr, roleNum);
-
-  const explorerUrl = `https://explorer.arc.testnet.circle.com/address/${IDENTITY_REGISTRY}`;
-  const githubLabel = github ? ` · ${esc(github)}` : "";
-
+  document.getElementById("reg-feedback").style.display="none";
+  if (!name||name.length<3)       return showFeedback("error","Agent name must be at least 3 characters.");
+  if (/[<>"'`]/.test(name))        return showFeedback("error","Name contains invalid characters.");
+  if (!isValidAddress(addr))       return showFeedback("error","Invalid wallet address.");
+  if (FOUNDER_ADDRS.has(addr.toLowerCase())) return showFeedback("error","Address already registered as founder agent.");
+  if (role==="auditor")            return showFeedback("error","Auditor registration is restricted. Apply via GitHub.");
+  btn.disabled=true; btn.textContent="Preparing…";
+  const roleNum = role==="producer"?0:1;
+  const calldata = buildCalldata(name,addr,roleNum);
+  const gLabel   = github ? " · "+esc(github) : "";
   showFeedback("ok",
-    `Registration prepared. To complete:<br/>
-    1. Open your wallet (MetaMask, Rabby, etc.)<br/>
-    2. Send a transaction to <a href="${explorerUrl}" target="_blank" style="color:var(--accent2);">${IDENTITY_REGISTRY.slice(0,10)}…</a><br/>
-    3. Paste this calldata:<br/>
-    <span style="word-break:break-all;color:var(--dim);font-size:.55rem;">${esc(calldata)}</span><br/>
-    Agent: <strong style="color:var(--text);">${esc(name)}</strong>${githubLabel}`
+    `Ready to register. Send a tx to IdentityRegistry:<br/>
+    <code style="font-size:.55rem;word-break:break-all;color:var(--dim);">${esc(IDENTITY_REGISTRY)}</code><br/>
+    Calldata:<br/>
+    <code style="font-size:.5rem;word-break:break-all;color:var(--dim);">${esc(calldata)}</code><br/>
+    Agent: <strong>${esc(name)}</strong>${gLabel}`
   );
-
-  btn.disabled = false;
-  btn.textContent = "Register Agent →";
+  btn.disabled=false; btn.textContent="Register Agent →";
 }
-
-function showFeedback(type, html) {
-  const fb = document.getElementById("reg-feedback");
-  fb.className = "form-feedback " + (type === "ok" ? "feedback-ok" : "feedback-err");
-  fb.innerHTML = html; // safe: only our own constructed strings + esc()d user input
-  fb.style.display = "block";
-}
-
-// Minimal ABI encoder for registerAgent(string,address,uint8)
-function encodeRegisterAgent(name, addr, role) {
-  const sig = "0x" + keccak256Sig("registerAgent(string,address,uint8)");
+function buildCalldata(name,addr,role) {
   const nameBytes = new TextEncoder().encode(name);
-  const namePadded = padHex(toHex(nameBytes), Math.ceil(nameBytes.length / 32) * 32);
-  const offset1 = "0000000000000000000000000000000000000000000000000000000000000060"; // string offset = 96
-  const addrPad = addr.slice(2).padStart(64,"0").toLowerCase();
-  const rolePad = role.toString(16).padStart(64,"0");
-  const nameLen = nameBytes.length.toString(16).padStart(64,"0");
-
-  return sig + offset1 + addrPad + rolePad + nameLen + namePadded;
+  const toHex = b=>Array.from(b).map(x=>x.toString(16).padStart(2,"0")).join("");
+  const pad   = (h,n)=>h.padEnd(n*2,"0");
+  const selector = "b5de0681"; // keccak256("registerAgent(string,address,uint8)")[0:4]
+  const offset   = "0000000000000000000000000000000000000000000000000000000000000060";
+  const addrPad  = addr.slice(2).padStart(64,"0").toLowerCase();
+  const rolePad  = role.toString(16).padStart(64,"0");
+  const lenPad   = nameBytes.length.toString(16).padStart(64,"0");
+  const dataPad  = pad(toHex(nameBytes), Math.ceil(nameBytes.length/32)*32);
+  return "0x"+selector+offset+addrPad+rolePad+lenPad+dataPad;
 }
-
-function toHex(bytes) { return Array.from(bytes).map(b=>b.toString(16).padStart(2,"0")).join(""); }
-function padHex(hex, targetBytes) { return hex.padEnd(targetBytes*2,"0"); }
-
-// Tiny keccak256 for function selectors — uses the 4-byte selector approach
-// In a real dApp you'd use ethers/viem. Here we hardcode the known selector.
-function keccak256Sig(sig) {
-  // Pre-computed: keccak256("registerAgent(string,address,uint8)") first 4 bytes
-  // You can verify at: https://www.4byte.directory/
-  const selectors = {
-    "registerAgent(string,address,uint8)": "b5de0681",
-  };
-  return selectors[sig] || "00000000";
-}
-
-// ─── Countdown ────────────────────────────────────────────────────────────────
-let countdown = REFRESH_MS / 1000;
-setInterval(() => {
-  countdown = Math.max(0, countdown - 1);
-  const el = document.getElementById("next-refresh");
-  if (el) el.textContent = `next refresh in ${countdown}s`;
-}, 1000);
 
 // ─── Main loop ────────────────────────────────────────────────────────────────
+let countdown = REFRESH_MS/1000;
+setInterval(()=>{
+  countdown=Math.max(0,countdown-1);
+  const el=document.getElementById("next-refresh");
+  if(el) el.textContent=`next refresh in ${countdown}s`;
+},1000);
+
 async function refresh() {
   try {
-    const latest = await getBlockNumber();
-    await Promise.all([fetchJobs(latest), fetchExternalAgents(latest)]);
-    renderJobs(latest);
+    // Always try jobs.json first — it has accurate creator/executor names
+    const gotJson = await fetchFromJson();
+    // Get block number for age display (best effort)
+    getBlockNumber().then(b=>{ latestBlock=b; }).catch(()=>{});
+    if (!gotJson) {
+      // Fallback to chain only if jobs.json unavailable
+      const b = await getBlockNumber();
+      latestBlock = b;
+      await fetchFromChain(b);
+    }
+    await fetchExternalAgents(latestBlock||0);
+    renderJobs();
     renderExternalAgents();
-  } catch (err) {
-    console.error("[Arc Data Economy] refresh error:", err);
-    const feed = document.getElementById("job-feed");
-    if (feed.querySelector(".feed-placeholder"))
-      feed.innerHTML = `<div class="feed-placeholder">rpc connection error — retrying in ${REFRESH_MS/1000}s</div>`;
+  } catch(err) {
+    console.error("[refresh]",err);
+    const feed=document.getElementById("job-feed");
+    if(feed.querySelector(".feed-placeholder"))
+      feed.innerHTML=`<div class="feed-placeholder">connection error — retrying in ${REFRESH_MS/1000}s</div>`;
   }
-  countdown = REFRESH_MS / 1000;
+  countdown=REFRESH_MS/1000;
 }
 
 refresh();
-setInterval(refresh, REFRESH_MS);
+setInterval(refresh,REFRESH_MS);
 </script>
 </body>
 </html>
