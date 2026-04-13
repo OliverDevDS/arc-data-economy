@@ -1,11 +1,24 @@
 {
-  "generated_at": "2026-04-13T18:48:27.766Z",
-  "total_cycles": 1518,
+  "generated_at": "2026-04-13T18:49:30.599Z",
+  "total_cycles": 1519,
   "ecosystem": "Arc Data Economy",
   "author": "OliverDevDS",
   "github": "https://github.com/OliverDevDS/arc-data-economy",
   "operator": "0x19868832e52e6bf64aed577de060782a63210897",
   "jobs": [
+    {
+      "id": "2873",
+      "description": "Translate support_faq.md to French...",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x4805452dbddf0cda1b250c3b126011de247176e1",
+      "executorName": "Translator-v1",
+      "amount": "0.10",
+      "status": "completed",
+      "score": 100,
+      "cycle": 1904,
+      "timestamp": "2026-04-13T18:48:50.278Z"
+    },
     {
       "id": "2872",
       "description": "Infer schema and validate payments_export_2026.csv...",
@@ -122,19 +135,6 @@
       "score": 100,
       "cycle": 1895,
       "timestamp": "2026-04-13T18:29:55.120Z"
-    },
-    {
-      "id": "2863",
-      "description": "Clean and normalize transaction_ledger_Q1.csv...",
-      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
-      "creatorName": "JobFactory-v1",
-      "executor": "0xad28062b28bc7d17a956cdfcaad6d85912d654aa",
-      "executorName": "DataWrangler-v1",
-      "amount": "0.10",
-      "status": "completed",
-      "score": 100,
-      "cycle": 1894,
-      "timestamp": "2026-04-13T18:27:52.627Z"
     }
   ]
 }
