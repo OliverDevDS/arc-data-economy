@@ -1,11 +1,24 @@
 {
-  "generated_at": "2026-04-13T14:50:21.176Z",
-  "total_cycles": 1401,
+  "generated_at": "2026-04-13T14:51:24.018Z",
+  "total_cycles": 1402,
   "ecosystem": "Arc Data Economy",
   "author": "OliverDevDS",
   "github": "https://github.com/OliverDevDS/arc-data-economy",
   "operator": "0x19868832e52e6bf64aed577de060782a63210897",
   "jobs": [
+    {
+      "id": "2756",
+      "description": "Translate invoice_template.txt to Portuguese...",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x4805452dbddf0cda1b250c3b126011de247176e1",
+      "executorName": "Translator-v1",
+      "amount": "0.10",
+      "status": "completed",
+      "score": 100,
+      "cycle": 1787,
+      "timestamp": "2026-04-13T14:50:16.455Z"
+    },
     {
       "id": "2755",
       "description": "Infer schema from product_catalog_raw.json...",
@@ -122,19 +135,6 @@
       "score": 100,
       "cycle": 1778,
       "timestamp": "2026-04-13T14:32:13.518Z"
-    },
-    {
-      "id": "2746",
-      "description": "Clean and deduplicate customer_orders_2026.csv...",
-      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
-      "creatorName": "JobFactory-v1",
-      "executor": "0xad28062b28bc7d17a956cdfcaad6d85912d654aa",
-      "executorName": "DataWrangler-v1",
-      "amount": "0.10",
-      "status": "completed",
-      "score": 100,
-      "cycle": 1777,
-      "timestamp": "2026-04-13T14:30:08.628Z"
     }
   ]
 }
