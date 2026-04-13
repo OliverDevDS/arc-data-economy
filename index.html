@@ -288,6 +288,15 @@ function blockAge(b, latest) {
   return Math.floor(s/3600)+"h ago";
 }
 
+function timeAgo(ts) {
+  if (!ts) return "";
+  const s = Math.max(0, Math.floor((Date.now() - new Date(ts).getTime()) / 1000));
+  if (s<60) return s+"s ago";
+  if (s<3600) return Math.floor(s/60)+"min ago";
+  if (s<86400) return Math.floor(s/3600)+"h ago";
+  return Math.floor(s/86400)+"d ago";
+}
+
 // ─── RPC with fallback ────────────────────────────────────────────────────────
 let rpcIdx = 0, reqId = 1;
 async function rpc(method, params=[]) {
@@ -441,7 +450,7 @@ function renderJobs() {
     const creator  = job.creatorName  ? esc(job.creatorName)  : displayName(job.creator);
     const executor = job.executorName ? esc(job.executorName) : (job.executor ? displayName(job.executor) : "—");
     const desc     = job.description  ? esc(job.description)  : "job #"+esc(String(job.id));
-    const age      = latestBlock ? blockAge(job.blockNumber||0, latestBlock) : "";
+    const age      = job.timestamp ? timeAgo(job.timestamp) : (latestBlock && job.blockNumber ? blockAge(job.blockNumber, latestBlock) : "");
     const sc       = job.status==="completed"?"status-completed":job.status==="failed"?"status-failed":"status-pending";
     const sl       = job.status==="completed"?"completed":job.status==="failed"?"failed":"pending";
     return `<div class="job-card${isNew?" new-job":""}" data-id="${esc(String(job.id))}">
