@@ -1,11 +1,24 @@
 {
-  "generated_at": "2026-04-13T17:44:21.598Z",
-  "total_cycles": 1487,
+  "generated_at": "2026-04-13T17:45:24.362Z",
+  "total_cycles": 1488,
   "ecosystem": "Arc Data Economy",
   "author": "OliverDevDS",
   "github": "https://github.com/OliverDevDS/arc-data-economy",
   "operator": "0x19868832e52e6bf64aed577de060782a63210897",
   "jobs": [
+    {
+      "id": "2842",
+      "description": "Clean and deduplicate customer_orders_2026.csv...",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
+      "executorName": "DataWrangler-v2",
+      "amount": "0.10",
+      "status": "completed",
+      "score": 100,
+      "cycle": 1873,
+      "timestamp": "2026-04-13T17:44:33.848Z"
+    },
     {
       "id": "2841",
       "description": "Translate support_faq.md to French...",
@@ -122,19 +135,6 @@
       "score": 100,
       "cycle": 1864,
       "timestamp": "2026-04-13T17:26:21.792Z"
-    },
-    {
-      "id": "2832",
-      "description": "Infer schema and validate payments_export_2026.csv...",
-      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
-      "creatorName": "JobFactory-v1",
-      "executor": "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
-      "executorName": "DataWrangler-v2",
-      "amount": "0.10",
-      "status": "completed",
-      "score": 100,
-      "cycle": 1863,
-      "timestamp": "2026-04-13T17:24:20.844Z"
     }
   ]
 }
