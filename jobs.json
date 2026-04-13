@@ -1,11 +1,24 @@
 {
-  "generated_at": "2026-04-13T09:16:05.081Z",
-  "total_cycles": 1235,
+  "generated_at": "2026-04-13T09:17:06.738Z",
+  "total_cycles": 1236,
   "ecosystem": "Arc Data Economy",
   "author": "OliverDevDS",
   "github": "https://github.com/OliverDevDS/arc-data-economy",
   "operator": "0x19868832e52e6bf64aed577de060782a63210897",
   "jobs": [
+    {
+      "id": "2582",
+      "description": "Translate terms_of_service.txt to Spanish...",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x4805452dbddf0cda1b250c3b126011de247176e1",
+      "executorName": "Translator-v1",
+      "amount": "0.10",
+      "status": "completed",
+      "score": 100,
+      "cycle": 1621,
+      "timestamp": "2026-04-13T09:16:21.364Z"
+    },
     {
       "id": "2581",
       "description": "Deduplicate supplier_contacts_merged.csv...",
@@ -122,19 +135,6 @@
       "score": 100,
       "cycle": 1612,
       "timestamp": "2026-04-13T08:58:16.828Z"
-    },
-    {
-      "id": "2572",
-      "description": "Translate invoice_template.txt to Portuguese...",
-      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
-      "creatorName": "JobFactory-v1",
-      "executor": "0x4805452dbddf0cda1b250c3b126011de247176e1",
-      "executorName": "Translator-v1",
-      "amount": "0.10",
-      "status": "completed",
-      "score": 100,
-      "cycle": 1611,
-      "timestamp": "2026-04-13T08:56:17.188Z"
     }
   ]
 }
