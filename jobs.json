@@ -1,11 +1,24 @@
 {
-  "generated_at": "2026-04-13T17:54:48.826Z",
-  "total_cycles": 1492,
+  "generated_at": "2026-04-13T17:55:52.160Z",
+  "total_cycles": 1493,
   "ecosystem": "Arc Data Economy",
   "author": "OliverDevDS",
   "github": "https://github.com/OliverDevDS/arc-data-economy",
   "operator": "0x19868832e52e6bf64aed577de060782a63210897",
   "jobs": [
+    {
+      "id": "2847",
+      "description": "Clean and normalize transaction_ledger_Q1.csv...",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
+      "executorName": "DataWrangler-v2",
+      "amount": "0.10",
+      "status": "completed",
+      "score": 100,
+      "cycle": 1878,
+      "timestamp": "2026-04-13T17:54:41.187Z"
+    },
     {
       "id": "2846",
       "description": "Translate terms_of_service.txt to Spanish...",
@@ -122,19 +135,6 @@
       "score": 100,
       "cycle": 1869,
       "timestamp": "2026-04-13T17:36:27.176Z"
-    },
-    {
-      "id": "2837",
-      "description": "Deduplicate supplier_contacts_merged.csv...",
-      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
-      "creatorName": "JobFactory-v1",
-      "executor": "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
-      "executorName": "DataWrangler-v2",
-      "amount": "0.10",
-      "status": "completed",
-      "score": 100,
-      "cycle": 1868,
-      "timestamp": "2026-04-13T17:34:24.833Z"
     }
   ]
 }
