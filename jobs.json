@@ -1,14 +1,158 @@
 {
-  "generated_at": "2026-04-21T08:36:56.254Z",
-  "total_cycles": 1988,
-  "total_jobs": 32,
-  "total_usdc": 2.9892,
+  "generated_at": "2026-04-21T20:15:33.980Z",
+  "total_cycles": 15,
+  "total_jobs": 41,
+  "total_usdc": 3.8118,
   "ecosystem": "Arc Data Economy",
   "version": "v2",
   "author": "OliverDevDS",
   "github": "https://github.com/OliverDevDS/arc-data-economy",
   "operator": "0x19868832e52e6bf64aed577de060782a63210897",
   "jobs": [
+    {
+      "id": "4567",
+      "description": "[CLASSIFY] 1776802503351 | 1459 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
+      "executorName": "DataWrangler-v2",
+      "amount": "0.1459",
+      "status": "completed",
+      "score": 100,
+      "cycle": 5,
+      "jobType": "classify",
+      "tokensUsed": 1459,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T20:15:32.512Z"
+    },
+    {
+      "id": "4566",
+      "description": "[CLEAN-CSV] 1776802409890.csv | 921 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0xad28062b28bc7d17a956cdfcaad6d85912d654aa",
+      "executorName": "DataWrangler-v1",
+      "amount": "0.0921",
+      "status": "completed",
+      "score": 100,
+      "cycle": 4,
+      "jobType": "clean-csv",
+      "tokensUsed": 921,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T20:13:57.721Z"
+    },
+    {
+      "id": "4565",
+      "description": "[EXTRACT] 1776802316484 | 557 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
+      "executorName": "DataWrangler-v2",
+      "amount": "0.0557",
+      "status": "completed",
+      "score": 100,
+      "cycle": 3,
+      "jobType": "extract",
+      "tokensUsed": 557,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T20:12:24.337Z"
+    },
+    {
+      "id": "4564",
+      "description": "[SUMMARIZE] 1776802224119 | 753 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0xad28062b28bc7d17a956cdfcaad6d85912d654aa",
+      "executorName": "DataWrangler-v1",
+      "amount": "0.0753",
+      "status": "completed",
+      "score": 100,
+      "cycle": 2,
+      "jobType": "summarize",
+      "tokensUsed": 753,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T20:10:55.721Z"
+    },
+    {
+      "id": "4563",
+      "description": "[TRANSLATE] 1776802100418 | 1145 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x4805452dbddf0cda1b250c3b126011de247176e1",
+      "executorName": "Translator-v1",
+      "amount": "0.1145",
+      "status": "completed",
+      "score": 100,
+      "cycle": 1,
+      "jobType": "translate",
+      "tokensUsed": 1145,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T20:08:49.010Z"
+    },
+    {
+      "id": "4541",
+      "description": "[CLEAN-CSV] 1776761089271.csv | 971 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0xad28062b28bc7d17a956cdfcaad6d85912d654aa",
+      "executorName": "DataWrangler-v1",
+      "amount": "0.0971",
+      "status": "completed",
+      "score": 100,
+      "cycle": 4,
+      "jobType": "clean-csv",
+      "tokensUsed": 971,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T08:45:17.143Z"
+    },
+    {
+      "id": "4540",
+      "description": "[EXTRACT] 1776760997593 | 588 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
+      "executorName": "DataWrangler-v2",
+      "amount": "0.0588",
+      "status": "completed",
+      "score": 100,
+      "cycle": 3,
+      "jobType": "extract",
+      "tokensUsed": 588,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T08:43:43.815Z"
+    },
+    {
+      "id": "4539",
+      "description": "[SUMMARIZE] 1776760905979 | 751 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0xad28062b28bc7d17a956cdfcaad6d85912d654aa",
+      "executorName": "DataWrangler-v1",
+      "amount": "0.0751",
+      "status": "completed",
+      "score": 100,
+      "cycle": 2,
+      "jobType": "summarize",
+      "tokensUsed": 751,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T08:42:13.855Z"
+    },
+    {
+      "id": "4538",
+      "description": "[TRANSLATE] 1776760782967 | 1081 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x4805452dbddf0cda1b250c3b126011de247176e1",
+      "executorName": "Translator-v1",
+      "amount": "0.1081",
+      "status": "completed",
+      "score": 100,
+      "cycle": 1,
+      "jobType": "translate",
+      "tokensUsed": 1081,
+      "nanopayment": true,
+      "timestamp": "2026-04-21T08:40:11.681Z"
+    },
     {
       "id": "4537",
       "description": "[TRANSLATE] 1776760388537 | 1249 tokens",
@@ -202,7 +346,7 @@
       "timestamp": "2026-04-15T23:59:08.697Z"
     },
     {
-      "id": "4512",
+      "id": "4521",
       "description": "[SUMMARIZE] 1776297403604 | 893 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -218,7 +362,7 @@
       "timestamp": "2026-04-15T23:56:45.200Z"
     },
     {
-      "id": "4513",
+      "id": "4522",
       "description": "[TRANSLATE] 1776297307930 | 1095 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -234,7 +378,7 @@
       "timestamp": "2026-04-15T23:55:10.370Z"
     },
     {
-      "id": "4514",
+      "id": "4523",
       "description": "[EXTRACT] 1776211649070 | 535 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -250,7 +394,7 @@
       "timestamp": "2026-04-15T00:07:33.372Z"
     },
     {
-      "id": "4515",
+      "id": "4524",
       "description": "[SUMMARIZE] 1776211558319 | 835 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -266,7 +410,7 @@
       "timestamp": "2026-04-15T00:06:00.701Z"
     },
     {
-      "id": "4516",
+      "id": "4525",
       "description": "[TRANSLATE] 1776211465104 | 1101 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -282,7 +426,7 @@
       "timestamp": "2026-04-15T00:04:28.482Z"
     },
     {
-      "id": "4517",
+      "id": "4526",
       "description": "[CLASSIFY] 1776211279658 | 1171 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -298,7 +442,7 @@
       "timestamp": "2026-04-15T00:01:21.764Z"
     },
     {
-      "id": "4518",
+      "id": "4527",
       "description": "[CLEAN-CSV] 1776211187860.csv | 942 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -314,7 +458,7 @@
       "timestamp": "2026-04-14T23:59:50.455Z"
     },
     {
-      "id": "4519",
+      "id": "4528",
       "description": "[EXTRACT] 1776211092655 | 573 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -330,7 +474,7 @@
       "timestamp": "2026-04-14T23:58:14.667Z"
     },
     {
-      "id": "4520",
+      "id": "4529",
       "description": "[SUMMARIZE] 1776210998628 | 804 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -346,7 +490,7 @@
       "timestamp": "2026-04-14T23:56:42.121Z"
     },
     {
-      "id": "4521",
+      "id": "4530",
       "description": "[TRANSLATE] 1776210904792 | 998 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -362,7 +506,7 @@
       "timestamp": "2026-04-14T23:55:07.735Z"
     },
     {
-      "id": "4522",
+      "id": "4531",
       "description": "[CLASSIFY] support_tickets | 899 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -378,7 +522,7 @@
       "timestamp": "2026-04-14T23:51:55.702Z"
     },
     {
-      "id": "4523",
+      "id": "4532",
       "description": "[CLEAN-CSV] 1776210620433.csv | 1027 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -394,7 +538,7 @@
       "timestamp": "2026-04-14T23:50:23.175Z"
     },
     {
-      "id": "4524",
+      "id": "4533",
       "description": "[SUMMARIZE] 1776210432379 | 809 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -410,7 +554,7 @@
       "timestamp": "2026-04-14T23:47:14.619Z"
     },
     {
-      "id": "4525",
+      "id": "4534",
       "description": "[TRANSLATE] 1776210332882 | 1016 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -426,7 +570,7 @@
       "timestamp": "2026-04-14T23:45:35.478Z"
     },
     {
-      "id": "4526",
+      "id": "4535",
       "description": "[SUMMARIZE] 1776180179932 | 881 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -442,7 +586,7 @@
       "timestamp": "2026-04-14T15:23:03.175Z"
     },
     {
-      "id": "4527",
+      "id": "4536",
       "description": "[TRANSLATE] 1776180080610 | 1004 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -458,7 +602,7 @@
       "timestamp": "2026-04-14T15:21:24.216Z"
     },
     {
-      "id": "4528",
+      "id": "4537",
       "description": "[CLEAN-CSV] customer_data.csv | 852 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -474,7 +618,7 @@
       "timestamp": "2026-04-14T01:03:05.093Z"
     },
     {
-      "id": "4529",
+      "id": "4538",
       "description": "[EXTRACT] business_email | 588 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -490,7 +634,7 @@
       "timestamp": "2026-04-14T01:01:31.556Z"
     },
     {
-      "id": "4530",
+      "id": "4539",
       "description": "[SUMMARIZE] q1_report | 678 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -506,7 +650,7 @@
       "timestamp": "2026-04-14T01:00:00.008Z"
     },
     {
-      "id": "4531",
+      "id": "4540",
       "description": "[TRANSLATE] terms_of_service | 649 tokens",
       "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
       "creatorName": "JobFactory-v1",
@@ -521,6 +665,5 @@
       "nanopayment": true,
       "timestamp": "2026-04-14T00:58:27.960Z"
     }
-  ],
-  "total_jobs_v2": 32
+  ]
 }
