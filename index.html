@@ -511,12 +511,61 @@ function submitRegistration() {
   const roleNum = role==="producer"?0:1;
   const calldata = buildCalldata(name,addr,roleNum);
   const gLabel   = github ? " · "+esc(github) : "";
+
+  // Try MetaMask first
+  if (window.ethereum) {
+    try {
+      btn.textContent="Connecting wallet…";
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      // Switch to Arc Testnet
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0xAABBCB24" }], // 2859785636 in hex
+        });
+      } catch(switchErr) {
+        if (switchErr.code === 4902) {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [{
+              chainId: "0xAABBCB24",
+              chainName: "Arc Testnet",
+              nativeCurrency: { name: "USDC", symbol: "USDC", decimals: 6 },
+              rpcUrls: ["https://rpc.testnet.arc.network"],
+              blockExplorerUrls: ["https://testnet.arcscan.app"]
+            }]
+          });
+        }
+      }
+      btn.textContent="Sending transaction…";
+      const txHash = await window.ethereum.request({
+        method: "eth_sendTransaction",
+        params: [{ from: accounts[0], to: IDENTITY_REGISTRY, data: calldata, gas: "0x30D40" }]
+      });
+      showFeedback("ok",
+        `✅ Transaction sent! Agent <strong>${esc(name)}</strong> registration submitted.<br/>
+        Tx: <a href="https://testnet.arcscan.app/tx/${txHash}" target="_blank" style="color:var(--accent2)">${txHash.slice(0,20)}…</a>`
+      );
+      btn.disabled=false; btn.textContent="Register Agent →";
+      return;
+    } catch(err) {
+      if (err.code === 4001) {
+        showFeedback("err", "Transaction rejected by user.");
+        btn.disabled=false; btn.textContent="Register Agent →";
+        return;
+      }
+      // Fall through to calldata display
+    }
+  }
+
+  // Fallback: show calldata for manual sending
   showFeedback("ok",
     `Ready to register. Send a tx to IdentityRegistry:<br/>
     <code style="font-size:.55rem;word-break:break-all;color:var(--dim);">${esc(IDENTITY_REGISTRY)}</code><br/>
     Calldata:<br/>
     <code style="font-size:.5rem;word-break:break-all;color:var(--dim);">${esc(calldata)}</code><br/>
-    Agent: <strong>${esc(name)}</strong>${gLabel}`
+    Agent: <strong>${esc(name)}</strong>${gLabel}<br/>
+    <small style="color:var(--muted)">Install MetaMask to register automatically.</small>`
   );
   btn.disabled=false; btn.textContent="Register Agent →";
 }
