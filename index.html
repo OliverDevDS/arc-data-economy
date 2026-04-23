@@ -495,7 +495,7 @@ function showFeedback(type,html) {
   fb.innerHTML = html;
   fb.style.display = "block";
 }
-function submitRegistration() {
+async function submitRegistration() {
   const name   = document.getElementById("reg-name").value.trim();
   const addr   = document.getElementById("reg-addr").value.trim();
   const role   = document.getElementById("reg-role").value;
