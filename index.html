@@ -521,14 +521,14 @@ async function submitRegistration() {
       try {
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0x4CFF0A" }], // 5042002 in hex
+          params: [{ chainId: "0x4CEF52" }], // 5042002 in hex
         });
       } catch(switchErr) {
         if (switchErr.code === 4902) {
           await window.ethereum.request({
             method: "wallet_addEthereumChain",
             params: [{
-              chainId: "0x4CFF0A",
+              chainId: "0x4CEF52",
               chainName: "Arc Testnet",
               nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
               rpcUrls: ["https://rpc.testnet.arc.network"],
