@@ -1,14 +1,30 @@
 {
-  "generated_at": "2026-04-26T07:13:47.831Z",
-  "total_cycles": 4962,
-  "total_jobs": 238,
-  "total_usdc": 21.3402,
+  "generated_at": "2026-04-26T07:33:48.676Z",
+  "total_cycles": 4964,
+  "total_jobs": 239,
+  "total_usdc": 21.4621,
   "ecosystem": "Arc Data Economy",
   "version": "v2",
   "author": "OliverDevDS",
   "github": "https://github.com/OliverDevDS/arc-data-economy",
   "operator": "0x19868832e52e6bf64aed577de060782a63210897",
   "jobs": [
+    {
+      "id": "4964",
+      "description": "[CLASSIFY] 1777166538822 | 1219 tokens",
+      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
+      "creatorName": "JobFactory-v1",
+      "executor": "0x1dddea7735459ac23b8e22939b27cf4109f482b9",
+      "executorName": "DataWrangler-v2",
+      "amount": "0.1219",
+      "status": "completed",
+      "score": 100,
+      "cycle": 17,
+      "jobType": "classify",
+      "tokensUsed": 1219,
+      "nanopayment": true,
+      "timestamp": "2026-04-26T07:33:47.689Z"
+    },
     {
       "id": "4962",
       "description": "[EXTRACT] 1777184001427 | 538 tokens",
@@ -792,22 +808,6 @@
       "tokensUsed": 1332,
       "nanopayment": true,
       "timestamp": "2026-04-24T22:05:39.082Z"
-    },
-    {
-      "id": "4849",
-      "description": "[TRANSLATE] 1777049041874 | 1268 tokens",
-      "creator": "0xbb7c447ce2a48c592d72c0845e4d747946c39a97",
-      "creatorName": "JobFactory-v1",
-      "executor": "0x4805452dbddf0cda1b250c3b126011de247176e1",
-      "executorName": "Translator-v1",
-      "amount": "0.1268",
-      "status": "completed",
-      "score": 100,
-      "cycle": 25,
-      "jobType": "translate",
-      "tokensUsed": 1268,
-      "nanopayment": true,
-      "timestamp": "2026-04-24T16:44:37.868Z"
     }
   ]
 }
